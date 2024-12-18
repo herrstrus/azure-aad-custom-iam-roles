@@ -2,7 +2,7 @@
   "Name": "Custom Role for Guest User Management and Service Modification",
   "Id": null,
   "IsCustom": true,
-  "Description": "Custom role that allows managing specified resources (read/write access) and Guest Users, while denying global create actions and allowing only required resource-level permissions.",
+  "Description": "Custom role for managing specified resources and Guest Users, assignable across all subscriptions in the Azure tenancy, while denying IAM role assignments at any level.",
   "Actions": [
     // Allow inviting Guest Users to Azure AD
     "Microsoft.Directory/guestUsers/invite/action",
@@ -119,10 +119,16 @@
   ],
   "NotActions": [
     // Block all create actions globally
-    "*/create"
+    "*/create",
+    
+    // Block IAM role assignment and management
+    "Microsoft.Authorization/roleAssignments/write",
+    "Microsoft.Authorization/roleAssignments/delete",
+    "Microsoft.Authorization/roleDefinitions/write",
+    "Microsoft.Authorization/roleDefinitions/delete"
   ],
   "AssignableScopes": [
-    // Replace {subscription-id} with the specific subscription scope
-    "/subscriptions/{subscription-id}"
+    // Root scope to make the role available across all subscriptions in the tenant
+    "/"
   ]
 }
