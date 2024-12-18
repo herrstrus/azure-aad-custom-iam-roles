@@ -2,7 +2,7 @@
   "Name": "Custom Role for Guest User Management and Service Modification",
   "Id": null,
   "IsCustom": true,
-  "Description": "Custom role for managing specified resources and Guest Users, assignable across all subscriptions in the Azure tenancy, while denying IAM role assignments at any level.",
+  "Description": "Custom role for managing specified resources, adding users to Azure AD groups, and Guest User management, assignable across all subscriptions in the Azure tenancy, while denying IAM role assignments.",
   "Actions": [
     // Allow inviting Guest Users to Azure AD
     "Microsoft.Directory/guestUsers/invite/action",
@@ -12,6 +12,9 @@
     
     // Allow managing Multi-Factor Authentication (MFA) for users, including Guest Users
     "Microsoft.Graph/user/authenticationMethods/manageMultiFactorAuthentication/action",
+    
+    // Allow updating Azure AD group memberships (adding/removing users)
+    "Microsoft.Directory/groups/memberships/update",
     
     // Allow reading and modifying SQL databases and servers
     "Microsoft.Sql/servers/read",
