@@ -1,0 +1,61 @@
+{
+  "Name": "Custom Role for Guest User Management and Service Modification",
+  "Id": null,
+  "IsCustom": true,
+  "Description": "Custom role that allows managing Guest Users (including inviting, resetting passwords, and managing MFA), viewing and modifying existing services, while restricting direct creation of users and services.",
+  "Actions": [
+    // Allow inviting Guest Users to Azure AD
+    "Microsoft.Directory/guestUsers/invite/action",
+    
+    // Allow resetting passwords for users, including Guest Users
+    "Microsoft.Graph/user/authenticationMethods/resetPassword/action",
+    
+    // Allow managing Multi-Factor Authentication (MFA) for users, including Guest Users
+    "Microsoft.Graph/user/authenticationMethods/manageMultiFactorAuthentication/action",
+    
+    // Allow reading and modifying existing resources in Azure Resource Manager
+    "Microsoft.Resources/subscriptions/resourceGroups/read",
+    "Microsoft.Resources/deployments/read",
+    "Microsoft.Resources/deployments/write",
+    "Microsoft.Resources/deployments/delete",
+    "Microsoft.Resources/deployments/operations/read",
+    "Microsoft.Resources/deployments/validate/action",
+    
+    // Allow reading and modifying resource tags
+    "Microsoft.Resources/tags/read",
+    "Microsoft.Resources/tags/write",
+    "Microsoft.Resources/tags/delete",
+    
+    // Allow reading and modifying Service Bus namespaces
+    "Microsoft.ServiceBus/namespaces/read",
+    "Microsoft.ServiceBus/namespaces/write",
+    
+    // Allow reading and modifying Web Apps
+    "Microsoft.Web/sites/read",
+    "Microsoft.Web/sites/write",
+    
+    // Allow reading and modifying Virtual Machines
+    "Microsoft.Compute/virtualMachines/read",
+    "Microsoft.Compute/virtualMachines/write"
+  ],
+  "NotActions": [
+    // Prevent creating new users directly in Azure AD
+    "Microsoft.Directory/users/create",
+    
+    // Prevent creating new deployments in Azure Resource Manager
+    "Microsoft.Resources/deployments/create",
+    
+    // Prevent creating new Service Bus namespaces
+    "Microsoft.ServiceBus/namespaces/create",
+    
+    // Prevent creating new Web Apps
+    "Microsoft.Web/sites/create",
+    
+    // Prevent creating new Virtual Machines
+    "Microsoft.Compute/virtualMachines/create"
+  ],
+  "AssignableScopes": [
+    // Replace {subscription-id} with the specific subscription scope
+    "/subscriptions/{subscription-id}"
+  ]
+}
