@@ -2,7 +2,7 @@
   "Name": "Custom Role for Guest User Management and Service Modification",
   "Id": null,
   "IsCustom": true,
-  "Description": "Custom role that allows managing Guest Users (including inviting, resetting passwords, and managing MFA), viewing and modifying existing services, while restricting direct creation of users and services.",
+  "Description": "Custom role that allows managing specified resources (read/write access) and Guest Users, while denying global create actions and allowing only required resource-level permissions.",
   "Actions": [
     // Allow inviting Guest Users to Azure AD
     "Microsoft.Directory/guestUsers/invite/action",
@@ -13,46 +13,113 @@
     // Allow managing Multi-Factor Authentication (MFA) for users, including Guest Users
     "Microsoft.Graph/user/authenticationMethods/manageMultiFactorAuthentication/action",
     
-    // Allow reading and modifying existing resources in Azure Resource Manager
-    "Microsoft.Resources/subscriptions/resourceGroups/read",
-    "Microsoft.Resources/deployments/read",
-    "Microsoft.Resources/deployments/write",
-    "Microsoft.Resources/deployments/delete",
-    "Microsoft.Resources/deployments/operations/read",
-    "Microsoft.Resources/deployments/validate/action",
+    // Allow reading and modifying SQL databases and servers
+    "Microsoft.Sql/servers/read",
+    "Microsoft.Sql/servers/write",
+    "Microsoft.Sql/databases/read",
+    "Microsoft.Sql/databases/write",
+    "Microsoft.Sql/managedInstances/read",
+    "Microsoft.Sql/managedInstances/write",
     
-    // Allow reading and modifying resource tags
-    "Microsoft.Resources/tags/read",
-    "Microsoft.Resources/tags/write",
-    "Microsoft.Resources/tags/delete",
+    // Allow actions on Redis Cache
+    "Microsoft.Cache/redis/read",
+    "Microsoft.Cache/redis/write",
     
-    // Allow reading and modifying Service Bus namespaces
-    "Microsoft.ServiceBus/namespaces/read",
-    "Microsoft.ServiceBus/namespaces/write",
+    // Allow actions on storage accounts
+    "Microsoft.Storage/storageAccounts/read",
+    "Microsoft.Storage/storageAccounts/write",
     
-    // Allow reading and modifying Web Apps
+    // Allow actions on API Gateway and Application Gateway
+    "Microsoft.ApiManagement/service/read",
+    "Microsoft.ApiManagement/service/write",
+    "Microsoft.Network/applicationGateways/read",
+    "Microsoft.Network/applicationGateways/write",
+    
+    // Allow actions on Front Door
+    "Microsoft.Cdn/profiles/read",
+    "Microsoft.Cdn/profiles/write",
+    
+    // Allow actions on Event services
+    "Microsoft.EventHub/namespaces/read",
+    "Microsoft.EventHub/namespaces/write",
+    
+    // Allow actions on subnets
+    "Microsoft.Network/virtualNetworks/subnets/read",
+    "Microsoft.Network/virtualNetworks/subnets/write",
+    
+    // Allow read-only access to Key Vault
+    "Microsoft.KeyVault/vaults/read",
+    
+    // Allow read-only access to DNS zones
+    "Microsoft.Network/dnsZones/read",
+    
+    // Allow actions on Local Gateway and VPN Gateway
+    "Microsoft.Network/localNetworkGateways/read",
+    "Microsoft.Network/localNetworkGateways/write",
+    "Microsoft.Network/vpnGateways/read",
+    "Microsoft.Network/vpnGateways/write",
+    
+    // Allow actions on App Service Plans and Function Apps
+    "Microsoft.Web/serverfarms/read",
+    "Microsoft.Web/serverfarms/write",
     "Microsoft.Web/sites/read",
     "Microsoft.Web/sites/write",
     
-    // Allow reading and modifying Virtual Machines
-    "Microsoft.Compute/virtualMachines/read",
-    "Microsoft.Compute/virtualMachines/write"
+    // Allow actions on Cosmos DB
+    "Microsoft.DocumentDB/databaseAccounts/read",
+    "Microsoft.DocumentDB/databaseAccounts/write",
+    
+    // Allow actions on B2C Tenancy
+    "Microsoft.AzureActiveDirectory/b2cDirectories/read",
+    "Microsoft.AzureActiveDirectory/b2cDirectories/write",
+    
+    // Allow actions on Bastion Host
+    "Microsoft.Network/bastionHosts/read",
+    "Microsoft.Network/bastionHosts/write",
+    
+    // Allow actions on Connections
+    "Microsoft.Network/connections/read",
+    "Microsoft.Network/connections/write",
+    
+    // Allow actions on Container Registry
+    "Microsoft.ContainerRegistry/registries/read",
+    "Microsoft.ContainerRegistry/registries/write",
+    
+    // Allow actions on endpoints
+    "Microsoft.Network/privateEndpoints/read",
+    "Microsoft.Network/privateEndpoints/write",
+    
+    // Allow actions on Load Balancer
+    "Microsoft.Network/loadBalancers/read",
+    "Microsoft.Network/loadBalancers/write",
+    
+    // Allow actions on Kubernetes Services
+    "Microsoft.ContainerService/managedClusters/read",
+    "Microsoft.ContainerService/managedClusters/write",
+    
+    // Allow actions on NAT Gateways
+    "Microsoft.Network/natGateways/read",
+    "Microsoft.Network/natGateways/write",
+    
+    // Allow actions on Network Security Groups
+    "Microsoft.Network/networkSecurityGroups/read",
+    "Microsoft.Network/networkSecurityGroups/write",
+    
+    // Allow actions on Route Tables
+    "Microsoft.Network/routeTables/read",
+    "Microsoft.Network/routeTables/write",
+    
+    // Allow actions on Static Web Apps
+    "Microsoft.Web/staticSites/read",
+    "Microsoft.Web/staticSites/write",
+    
+    // Allow actions on Traffic Manager
+    "Microsoft.Network/trafficManagerProfiles/read",
+    "Microsoft.Network/trafficManagerProfiles/write"
   ],
   "NotActions": [
-    // Prevent creating new users directly in Azure AD
-    "Microsoft.Directory/users/create",
-    
-    // Prevent creating new deployments in Azure Resource Manager
-    "Microsoft.Resources/deployments/create",
-    
-    // Prevent creating new Service Bus namespaces
-    "Microsoft.ServiceBus/namespaces/create",
-    
-    // Prevent creating new Web Apps
-    "Microsoft.Web/sites/create",
-    
-    // Prevent creating new Virtual Machines
-    "Microsoft.Compute/virtualMachines/create"
+    // Block all create actions globally
+    "*/create"
   ],
   "AssignableScopes": [
     // Replace {subscription-id} with the specific subscription scope
